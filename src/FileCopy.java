@@ -2,12 +2,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class Main { // Change to FileCopy if the autograder requires that name
+public class Main {
     public static void main(String[] args) {
+        // Use relative paths as required by the assignment
         String sourceFile = "source.txt";
         String destFile = "destination.txt";
 
-        // PART 1: COPYING
+        // Task 1: Copy from source to destination
         try (FileInputStream fis = new FileInputStream(sourceFile);
              FileOutputStream fos = new FileOutputStream(destFile)) {
             
@@ -16,24 +17,25 @@ public class Main { // Change to FileCopy if the autograder requires that name
                 fos.write(byteData);
             }
             
-            // Exact output required by problem
+            // Required Output line 1
             System.out.println("File Copied");
 
         } catch (IOException e) {
-            // Do not print anything else if the autograder doesn't ask for it
+            // If the file is missing or inaccessible
             return;
         }
 
-        // PART 2: DISPLAYING
+        // Task 2: Display the content of the destination file
         try (FileInputStream fis = new FileInputStream(destFile)) {
             int byteData;
             while ((byteData = fis.read()) != -1) {
+                // Cast byte to char to display as text
                 System.out.print((char) byteData);
             }
-            // Many autograders expect a trailing newline
-            System.out.println(); 
+            // Add a newline at the end of the file content
+            System.out.println();
         } catch (IOException e) {
-            // Silently handle
+            // Handle secondary read error
         }
     }
 }

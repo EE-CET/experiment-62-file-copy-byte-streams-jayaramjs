@@ -2,37 +2,41 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class FileCopy {
+public class FileCopyDemo {
     public static void main(String[] args) {
+        // Use relative paths as per requirements
         String sourceFile = "source.txt";
         String destFile = "destination.txt";
 
-        // Part 1: Copy from source to destination using Byte Streams
+        // Part 1: Copying the File
+        // Try-with-resources handles multiple streams separated by a semicolon
         try (FileInputStream fis = new FileInputStream(sourceFile);
              FileOutputStream fos = new FileOutputStream(destFile)) {
             
-            // TODO: Declare an integer variable to hold the byte read
             int byteData;
             
-            // TODO: Read from 'fis' until it returns -1
-            // TODO: Write the byte read to 'fos'
+            // read() returns -1 when the end of the file (EOF) is reached
+            while ((byteData = fis.read()) != -1) {
+                fos.write(byteData);
+            }
             
+            System.out.println("File Copied");
 
         } catch (IOException e) {
-            System.out.println("Error during file copy: " + e.getMessage());
-            return; // Exit if copy fails
+            System.out.println("Error: " + e.getMessage());
+            return; // Stop execution if the copy fails
         }
 
-        System.out.println("File Copied");
-
-        // Part 2: Read and display the contents of the newly created destination file
+        // Part 2: Displaying the Destination Content
         try (FileInputStream fis = new FileInputStream(destFile)) {
-            
-            // TODO: Read from 'fis' and print each byte as a character to the console
-            // Hint: use (char) to cast the integer byte to a character before printing
-
+            int byteData;
+            while ((byteData = fis.read()) != -1) {
+                // Cast the integer byte to char to display as text
+                System.out.print((char) byteData);
+            }
+            System.out.println(); // New line after content
         } catch (IOException e) {
-            System.out.println("Error reading destination file: " + e.getMessage());
+            System.out.println("Error reading destination: " + e.getMessage());
         }
     }
 }
